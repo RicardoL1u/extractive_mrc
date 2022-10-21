@@ -155,7 +155,7 @@ def postprocess_qa_predictions(
                             "offsets": (offset_mapping[start_index][0], offset_mapping[end_index][1]),
                             "score": start_logits[start_index] + end_logits[end_index],
                             "start_logit": start_logits[start_index],
-                            "end_logit": end_logits[end_index],
+                             "end_logit": end_logits[end_index],
                         }
                     )
         if version_2_with_negative and min_null_prediction is not None:
@@ -179,6 +179,9 @@ def postprocess_qa_predictions(
         for pred in predictions:
             offsets = pred.pop("offsets")
             pred["text"] = context[offsets[0] : offsets[1]]
+            # TODO: attention! not right if the input len > 512
+            pred["start"] = offsets[0]
+            pred["end"] = offsets[1]
 
         # In the very rare edge case we have not a single non-null prediction, we create a fake prediction to avoid
         # failure.
