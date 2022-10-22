@@ -1,10 +1,10 @@
 import json
 with open('refine_dataset.json','r',encoding='utf-8')as f:
-    data=json.load(f)['data']
+    data=json.load(f)
 ans={}
 rat={}
-label_0={}
-with open('mrc_rationale_xbase_attention_20221014_2.txt','r',encoding='utf-8') as f:
+label_0={} # label for start
+with open('roberta_large.txt','r',encoding='utf-8') as f:
     for line in f:
         t_1=line.find('\t')
         id_=int(line[:t_1])
@@ -36,7 +36,7 @@ for term in data:
     list_c=sorted(list_b,key=lambda x:x[1],reverse=True)
     tmp=[]
     for i in list_c:
-        if i[1]==list_c[0][1]:
+        if i[1]==list_c[0][1]: # check wether equal to top 1
             tmp.append(i[0])
         else:
             break
