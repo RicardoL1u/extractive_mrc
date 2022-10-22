@@ -5,3 +5,4 @@ wandb/
 *.log
 *.zip
 *.json
+*.txt
